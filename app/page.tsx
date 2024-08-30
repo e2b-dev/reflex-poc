@@ -54,7 +54,7 @@ export default function Home() {
             </a>
           </p>
         )}
-        {loading && <p className="mt-4 text-gray-500 text-sm">Building sandbox...</p>}
+        {loading && <p className="mt-4 text-gray-500 text-sm">Launching sandbox...</p>}
       </div>
     </div>
   );
