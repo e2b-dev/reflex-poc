@@ -21,9 +21,6 @@ export async function createSandbox(code: string) {
   // Run the healthcheck - will start and wait for the dev server to be ready
   await sandbox.process.startAndWait("python3 /home/user/healthcheck.py " + url);
 
-  // Run healthcheck again to make sure the server is fully reloaded
-  // await sandbox.process.startAndWait("python3 /home/user/healthcheck.py " + url);
-
   // Return the URL
   return {
     url: `https://${url}`,
