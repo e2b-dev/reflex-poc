@@ -10,11 +10,16 @@ import { createSandbox } from "./sandbox";
 export default function Home() {
   const [code, setCode] = useState(sampleCode);
   const [sandboxUrl, setSandboxUrl] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   async function deployCode() {
+    setLoading(true);
     setSandboxUrl(null);
+
     const sandbox = await createSandbox(code);
+
     setSandboxUrl(sandbox.url);
+    setLoading(false);
   }
 
   return (
@@ -49,6 +54,7 @@ export default function Home() {
             </a>
           </p>
         )}
+        {loading && <p className="mt-4 text-gray-500 text-sm">Building sandbox...</p>}
       </div>
     </div>
   );

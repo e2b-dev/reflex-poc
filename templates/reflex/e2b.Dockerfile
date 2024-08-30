@@ -3,9 +3,11 @@ FROM python:3.9-slim
 
 WORKDIR /home/user
 
+COPY healthcheck.py /home/user/healthcheck.py
+
 RUN apt update
 RUN apt install -y unzip curl
-RUN pip3 install --no-cache-dir reflex
+RUN pip3 install --no-cache-dir reflex requests
 
 RUN reflex init --template=blank --name=e2b
 

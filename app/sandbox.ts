@@ -14,6 +14,9 @@ export async function createSandbox(code: string) {
 
   const url = await sandbox.getHostname(3000);
 
+  // run the healthcheck - will start and wait for the server to be ready
+  await sandbox.process.startAndWait("python3 /home/user/healthcheck.py " + url);
+
   return {
     url: `https://${url}`,
   };
