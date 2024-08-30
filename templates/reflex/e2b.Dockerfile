@@ -4,6 +4,8 @@ FROM python:3.9-slim
 WORKDIR /home/user
 
 COPY healthcheck.py /home/user/healthcheck.py
+# COPY startup.sh /startup.sh
+# RUN chmod +x /startup.sh
 
 RUN apt update
 RUN apt install -y unzip curl
