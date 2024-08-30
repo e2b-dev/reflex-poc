@@ -32,6 +32,13 @@ export async function createSandbox(code: string) {
 
   // Return the URL
   return {
+    id: sandbox.id,
     url: `${protocol}://${frontend_url}`,
   };
+}
+
+export async function updateSandbox(sandbox_id: string, code: string) {
+  console.log("Updating sandbox", sandbox_id);
+  const sandbox = await Sandbox.reconnect(sandbox_id);
+  await sandbox.filesystem.write(filename, code);
 }

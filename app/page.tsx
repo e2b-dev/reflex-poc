@@ -5,20 +5,29 @@ import CodeMirror from "@uiw/react-codemirror";
 import { python } from "@codemirror/lang-python";
 import { bbedit } from "@uiw/codemirror-theme-bbedit";
 import sampleCode from "./sample-code";
-import { createSandbox } from "./sandbox";
+import { createSandbox, updateSandbox } from "./sandbox";
+
+type Sandbox = {
+  id: string;
+  url: string;
+};
 
 export default function Home() {
   const [code, setCode] = useState(sampleCode);
-  const [sandboxUrl, setSandboxUrl] = useState<string | null>(null);
+  const [sandbox, setSandbox] = useState<Sandbox | null>(null);
   const [loading, setLoading] = useState(false);
 
   async function deployCode() {
     setLoading(true);
-    setSandboxUrl(null);
 
-    const sandbox = await createSandbox(code);
+    if (sandbox) {
+      await updateSandbox(sandbox.id, code);
+    } else {
+      setSandbox(null);
+      const sandbox = await createSandbox(code);
+      setSandbox(sandbox);
+    }
 
-    setSandboxUrl(sandbox.url);
     setLoading(false);
   }
 
@@ -46,15 +55,17 @@ export default function Home() {
         >
           Deploy
         </button>
-        {sandboxUrl && (
+        {sandbox && (
           <p className="mt-4 text-gray-500 text-sm">
             ✅ Sandbox URL:{" "}
-            <a href={sandboxUrl} target="_blank" rel="noopener noreferrer">
-              {sandboxUrl}
+            <a href={sandbox.url} target="_blank" rel="noopener noreferrer">
+              {sandbox.url}
             </a>
           </p>
         )}
-        {loading && <p className="mt-4 text-gray-500 text-sm">Launching sandbox...</p>}
+        {loading && (
+          <p className="mt-4 text-gray-500 text-sm">Launching sandbox...</p>
+        )}
       </div>
     </div>
   );
