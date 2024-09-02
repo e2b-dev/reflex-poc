@@ -27,7 +27,7 @@ export async function createSandbox(code: string) {
 
   // Run the healthcheck - will start and wait for the dev server to be ready
   await sandbox.process.startAndWait(
-    "python3 /home/user/healthcheck.py " + frontend_url
+    `python3 /home/user/healthcheck.py http://localhost:${frontend_port}`
   );
 
   // Return the URL
